@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="intro">
+    {% for i in intro %}<p>{{ i }}</p>{% endfor %}
+</div>
+<div class="next_gig">
+    {{ next_gig }}
+</div>
+{% endblock %}
