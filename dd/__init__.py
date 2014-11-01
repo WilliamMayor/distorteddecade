@@ -16,6 +16,7 @@ def create_app():
         if v is not None:
             app.config[k] = v
     app.config['SQLALCHEMY_DATABASE_URI'] = app.config['DATABASE_URL']
+    app.config['DEBUG'] = True
 
     assets.init_app(app)
     manager.init_app(app)
