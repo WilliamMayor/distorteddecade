@@ -1,0 +1,39 @@
+.bookends {
+    list-style-type: none;
+    text-align: center;
+    white-space: nowrap;
+    margin: 0;
+    padding: 0;
+    li {
+        display: inline-block;
+        vertical-align: middle;
+    }
+    .end {
+        &:first-child, &:last-child {
+            font-family: 'cf_punkrockshowregular';
+            font-size: 3em;
+        }
+        &:first-child {
+            -moz-transform: scale(-1, 1);
+            -webkit-transform: scale(-1, 1);
+            -o-transform: scale(-1, 1);
+            -ms-transform: scale(-1, 1);
+            transform: scale(-1, 1);
+            margin-right: -5px;
+        }
+        &:last-child {
+            margin-left: -5px;
+        }
+    }
+    .books {
+        display: inline-block;
+        height: 2.5em;
+        padding: 0 10px;
+        background: rgb(255, 255, 255);
+        background: rgba(255, 255, 255, 0.5);
+
+        li {
+            margin-top: 0.4em;
+        }
+    }
+}

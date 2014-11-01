@@ -1,4 +1,9 @@
 venv
 *.pyc
-staticfiles
 .env
+
+dd/static/.webassets-cache
+
+dd/static/main.min.css
+
+dd/static/main.min.js

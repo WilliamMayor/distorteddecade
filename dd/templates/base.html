@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>DistortedDecade - {{ title | default('The best covers band you\'ve ever heard!') }}</title>
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+        {% assets "css" %}<link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}" />{% endassets %}
+    </head>
+    <body>
+        <img alt="full screen background image"
+             src="{{ url_for('static', filename='images/background.jpg') }}" 
+             id="full-screen-background-image" />
+        <h1>distorted decade</h1>
+        <div id="contact-details">
+            <ul class="bookends">
+                <li class="end">d</li>
+                <li>
+                    <ul class="books">
+                        <li class="tel"><a href="tel:{{ config['TEL'] | replace(' ', '') }}">{{ config['TEL'] }}</a></li>
+                        <li><i class="fa fa-circle"></i></li>
+                        <li class="email"><a href="mailto:{{ config['EMAIL'] }}">{{ config['EMAIL'] }}</a></li>
+                        <li><i class="fa fa-circle"></i></li>
+                        <li class="fb"><a href="{{ config['FB'] }}" target="_blank"><i class="fa fa-facebook fa-fw"></i></a></li>
+                    </ul>
+                </li>
+                <li class="end">d</li>
+            </ul>
+        </div>
+        <nav class="wrapper">
+            <ul>
+                <li><a {% if request.path == url_for('.home') %}class="current"{% endif %} href="{{ url_for('.home') }}">HOME</a>
+                </li><li><a {% if request.path == url_for('.bio') %}class="current"{% endif %} href="{{ url_for('.bio') }}">BIO</a>
+                </li><li><a {% if request.path == url_for('.music') %}class="current"{% endif %} href="{{ url_for('.music') }}">MUSIC</a>
+                </li><li><a {% if request.path == url_for('.gigs') %}class="current"{% endif %} href="{{ url_for('.gigs') }}">GIGS</a></li>
+            </ul>
+        </nav>
+        {% block content %}
+        <div class="wrapper">
+            Nothing here yet
+        </div>
+        {% endblock %}
+        {% assets "js" %}<script type="text/javascript" src="{{ ASSET_URL }}"></script>{% endassets %}
+    </body>
+</html>
