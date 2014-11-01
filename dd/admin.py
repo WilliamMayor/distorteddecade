@@ -11,25 +11,25 @@ admin = Blueprint('admin', __name__, template_folder='templates')
 @admin.route('/')
 @login_required
 def home():
-    return render_template('home.html')
+    return render_template('home.html', user=current_user)
 
 
 @admin.route('/bio/')
 @login_required
 def bio():
-    return render_template('home.html')
+    return render_template('home.html', user=current_user)
 
 
 @admin.route('/music/')
 @login_required
 def music():
-    return render_template('home.html')
+    return render_template('home.html', user=current_user)
 
 
 @admin.route('/gigs/')
 @login_required
 def gigs():
-    return render_template('home.html')
+    return render_template('home.html', user=current_user)
 
 
 @admin.route('/signin/', methods=['GET', 'POST'])

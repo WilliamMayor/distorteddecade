@@ -39,7 +39,7 @@
             Nothing here yet
         </div>
         {% endblock %}
-        <p class="thenet"><span>&#960;</span></p>
+        <p class="thenet">{% if user is defined and user.is_authenticated() %}<a href="{{ url_for('.signout') }}">sign out</a>{% else %}<span>&#960;</span>{% endif %}</p>
         {% assets "js" %}<script type="text/javascript" src="{{ ASSET_URL }}"></script>{% endassets %}
     </body>
 </html>
