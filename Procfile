@@ -1,1 +1,0 @@
-web: gunicorn distorteddecade.wsgi --log-file -
