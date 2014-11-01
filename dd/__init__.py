@@ -18,8 +18,6 @@ def create_app():
     app.config.from_object('dd.config')
     app.config.from_pyfile('../.env', silent=True)
     for k in app.config:
-        app.logger.info(k)
-        app.logger.info(app.config[k])
         v = os.environ.get(k, None)
         if v is not None:
             app.config[k] = v
