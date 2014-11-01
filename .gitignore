@@ -2,3 +2,5 @@ venv
 *.pyc
 .env
 dd/static/.webassets-cache
+
+envelope.py
