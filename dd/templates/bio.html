@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% set title="Bios" %}
+{% set page="public bio" %}
+{% block content %}
+{% for bio in bios | sort(attribute='bid') %}
+<div class="wrapper bio">
+    <div class="image"><img src="{{ bio.image }}" alt="Picture of {{ bio.name }}" title="Picture of {{ bio.name }}" /></div>
+    <div class="text">
+        <p class="name">{{ bio.name }}</p>
+        <p class="role">{{ bio.role }}</p>
+        <p class="bio">{{ bio.text }}</p>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

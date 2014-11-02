@@ -57,3 +57,12 @@ class Intro(db.Model):
         for p in self.text.split('\n'):
             if p:
                 yield p
+
+
+class Bio(db.Model):
+    bid = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.Text)
+    role = db.Column(db.Text)
+    image = db.Column(db.Text)
+    text = db.Column(db.Text)
+

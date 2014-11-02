@@ -3,7 +3,6 @@
 {% set page="admin home" %}
 {% block content %}
 <div class="wrapper users">
-    <h2>Users</h2>
     <table>
         <tr><th>Username</th><th>Email</th><th>Password</th><th></th><th></th></tr>
         {% for u in users | sort(attribute='username') %}

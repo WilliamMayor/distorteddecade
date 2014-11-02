@@ -1,0 +1,18 @@
+.admin.bio {
+    .bio {
+        label {
+            display: inline-block;
+            width: 100px;
+            text-align: right;
+            margin-bottom: 10px;
+        }
+        .image {
+            width: 600px;
+        }
+        textarea {
+            width: 100%;
+            min-height: 200px;
+            resize: vertical;
+        }
+    }
+}

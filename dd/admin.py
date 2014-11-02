@@ -1,8 +1,8 @@
 from flask import g, Blueprint, current_app, render_template, redirect, request, url_for, jsonify, flash
 from flask.ext.login import current_user, login_required, login_user, logout_user
 
-from forms import SigninForm
-from models import db, User, Intro
+from forms import SigninForm, BioForm
+from models import db, User, Intro, Bio
 
 
 admin = Blueprint('admin', __name__, template_folder='templates')
@@ -97,7 +97,41 @@ def delete_user(uid):
 @admin.route('/bio/')
 @login_required
 def bio():
-    return render_template('base.html', user=current_user)
+    return render_template(
+        'admin/bio.html', user=current_user,
+        bios=[BioForm(None, obj=b) for b in Bio.query.all()],
+        form=BioForm())
+
+
+@admin.route('/bio/create/', methods=['POST'])
+@login_required
+def bio_create():
+    form = BioForm()
+    if form.validate_on_submit():
+        b = Bio()
+        del form.bid
+        form.populate_obj(b)
+        db.session.add(b)
+        db.session.commit()
+    else:
+        print form.errors
+        flash('There was an error saving the bio, sorry', 'error')
+    return redirect(url_for('.bio'))
+
+
+@admin.route('/bio/update/<int:bid>/', methods=['POST'])
+@login_required
+def bio_update(bid):
+    form = BioForm()
+    if form.validate_on_submit():
+        b = Bio.query.get(bid)
+        form.populate_obj(b)
+        db.session.add(b)
+        db.session.commit()
+    else:
+        print form.errors
+        flash('There was an error saving the bio, sorry', 'error')
+    return redirect(url_for('.bio'))
 
 
 @admin.route('/music/')

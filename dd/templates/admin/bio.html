@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% set title="Admin | Bio" %}
+{% set page="admin bio" %}
+{% block content %}
+{% for bio in bios | sort(attribute='bid') %}
+<div class="wrapper bio">
+    <form method="POST" action="{{ url_for('.bio_update', bid=bio.bid.data) }}">
+        {{ bio.hidden_tag() }}
+        {{ bio.name.label }}: {{ bio.name() }}<br />
+        {{ bio.role.label }}: {{ bio.role() }}<br />
+        {{ bio.image.label }}: {{ bio.image(class='image') }}<br />
+        {{ bio.text.label }}: {{ bio.text() }}
+        <input type="submit" value="Save" />
+    </form>
+</div>
+{% endfor %}
+<div class="wrapper bio">
+    <form method="POST" action="{{ url_for('.bio_create') }}">
+        {{ form.hidden_tag() }}
+        {{ form.name.label }}: {{ form.name() }}<br />
+        {{ form.role.label }}: {{ form.role() }}<br />
+        {{ form.image.label }}: {{ form.image(class='image') }}<br />
+        {{ form.text.label }}: {{ form.text() }}
+        <input type="submit" value="Add" />
+    </form>
+</div>
+{% endblock %}

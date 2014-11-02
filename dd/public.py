@@ -1,6 +1,6 @@
 from flask import Blueprint, current_app, render_template
 
-from models import Intro
+from models import Intro, Bio
 
 public = Blueprint('public', __name__, template_folder='templates')
 
@@ -13,7 +13,7 @@ def home():
 
 @public.route('/bio/')
 def bio():
-    return render_template('base.html')
+    return render_template('bio.html', bios=Bio.query.all())
 
 
 @public.route('/music/')
