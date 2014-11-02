@@ -1,19 +1,30 @@
-from flask import g, Blueprint, current_app, render_template, redirect, request, url_for, jsonify
+from flask import g, Blueprint, current_app, render_template, redirect, request, url_for, jsonify, flash
 from flask.ext.login import current_user, login_required, login_user, logout_user
 
 from forms import SigninForm
-from models import db, User
+from models import db, User, Intro
 
 
 admin = Blueprint('admin', __name__, template_folder='templates')
 
 
-@admin.route('/')
+@admin.route('/', methods=['GET', 'POST'])
 @login_required
 def home():
+    if request.method == 'POST':
+        try:
+            intro = Intro()
+            intro.text = request.form['intro']
+            db.session.add(intro)
+            db.session.commit()
+        except Exception as e:
+            current_app.logger.error(str(e))
+            flash('There was an error saving the intro', 'error')
     return render_template(
         'admin/home.html', user=current_user,
-        users=User.query.all())
+        users=User.query.all(),
+        intro=Intro.query.order_by(Intro.date.desc()).first())
+
 
 
 @admin.route('/users/', methods=['POST'])

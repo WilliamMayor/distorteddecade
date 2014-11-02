@@ -51,7 +51,7 @@ class User(db.Model):
 class Intro(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.Text, nullable=False)
-    date = db.Column(db.Date, nullable=False, default=datetime.date.today)
+    date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.now)
 
     def __iter__(self):
         for p in self.text.split('\n'):
