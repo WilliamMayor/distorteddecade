@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="wrapper">
-    {{ lipsum() }}
+    {% for p in intro %}
+    <p>{{ p }}</p>
+    {% endfor %}
 </div>
 {% endblock %}

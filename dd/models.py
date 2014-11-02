@@ -1,3 +1,5 @@
+import datetime
+
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.bcrypt import Bcrypt
 
@@ -31,3 +33,14 @@ class User(db.Model):
 
     def __repr__(self):
         return '<User %r>' % (self.username)
+
+
+class Intro(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    text = db.Column(db.Text, nullable=False)
+    date = db.Column(db.Date, nullable=False, default=datetime.date.today)
+
+    def __iter__(self):
+        for p in self.text.split('\n'):
+            if p:
+                yield p

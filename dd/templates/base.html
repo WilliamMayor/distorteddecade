@@ -36,7 +36,7 @@
         </nav>
         {% block content %}
         <div class="wrapper">
-            Nothing here yet
+            {{ lipsum() }}
         </div>
         {% endblock %}
         <p class="thenet">{% if user is defined and user.is_authenticated() %}<a href="{{ url_for('.signout') }}">sign out</a>{% else %}<span>&#960;</span>{% endif %}</p>
