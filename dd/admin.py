@@ -1,8 +1,8 @@
-from flask import g, Blueprint, current_app, render_template, redirect, request, url_for
+from flask import g, Blueprint, current_app, render_template, redirect, request, url_for, jsonify
 from flask.ext.login import current_user, login_required, login_user, logout_user
 
 from forms import SigninForm
-from models import User
+from models import db, User
 
 
 admin = Blueprint('admin', __name__, template_folder='templates')
@@ -11,25 +11,94 @@ admin = Blueprint('admin', __name__, template_folder='templates')
 @admin.route('/')
 @login_required
 def home():
-    return render_template('home.html', user=current_user)
+    return render_template(
+        'admin/home.html', user=current_user,
+        users=User.query.all())
+
+
+@admin.route('/users/', methods=['POST'])
+@login_required
+def add_user():
+    data = request.json
+    if not all(data.values()):
+        return jsonify(error='Missing field: username, email or password'), 400
+    u = User.query.filter_by(username=data['username']).first()
+    if u is not None:
+        return jsonify(error='That username is already taken'), 400
+    u = User()
+    u.username = data['username']
+    u.email = data['email']
+    u.set_password(data['password'])
+    try:
+        db.session.add(u)
+        db.session.commit()
+        return jsonify(user=u.as_json()), 201
+    except Exception as e:
+        current_app.logger.error(str(e))
+        return jsonify(error='There was a database error, check the logs'), 500
+
+
+@admin.route('/users/<int:uid>/', methods=['POST'])
+@login_required
+def update_user(uid):
+    data = request.json
+    if not all([data.get('username', None), data.get('email', None)]):
+        return jsonify(error='Missing field: username or email'), 400
+    u = User.query.filter_by(username=data['username']).first()
+    if u is not None and u.id != uid:
+        return jsonify(error='That username is already taken'), 400
+    u = User.query.get(uid)
+    if not u.is_editable():
+        return jsonify(error='You cannot edit this user'), 400
+    u.username = data['username']
+    u.email = data['email']
+    if 'password' in data and data['password'] and data['password'] != '********':
+        u.set_password(data['password'])
+    try:
+        db.session.add(u)
+        db.session.commit()
+        return jsonify(user=u.as_json())
+    except Exception as e:
+        current_app.logger.error(str(e))
+        return jsonify(error='There was a database error, check the logs'), 500
+
+
+@admin.route('/users/<int:uid>/delete/', methods=['POST'])
+@login_required
+def delete_user(uid):
+    data = request.json
+    if not data.get('username', None):
+        return jsonify(error='Missing field: username'), 400
+    u = User.query.get(uid)
+    if not u.is_deletable():
+        return jsonify(error='You cannot delete this user'), 400
+    if data['username'] != u.username:
+        return jsonify(error='Confirm the delete by providing the username'), 400
+    try:
+        db.session.delete(u)
+        db.session.commit()
+        return jsonify(message='Deleted')
+    except Exception as e:
+        current_app.logger.error(str(e))
+        return jsonify(error='There was a database error, check the logs'), 500
 
 
 @admin.route('/bio/')
 @login_required
 def bio():
-    return render_template('home.html', user=current_user)
+    return render_template('base.html', user=current_user)
 
 
 @admin.route('/music/')
 @login_required
 def music():
-    return render_template('home.html', user=current_user)
+    return render_template('base.html', user=current_user)
 
 
 @admin.route('/gigs/')
 @login_required
 def gigs():
-    return render_template('home.html', user=current_user)
+    return render_template('base.html', user=current_user)
 
 
 @admin.route('/signin/', methods=['GET', 'POST'])

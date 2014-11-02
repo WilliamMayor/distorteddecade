@@ -1,0 +1,33 @@
+.admin.home {
+    .users {
+        h2 {
+            margin: 0 0 10px 0;
+        }
+        table {
+            width: 100%;
+            tr {
+                border-bottom: 1px solid black;
+                &:last-child {
+                    border-bottom: none;
+                }
+                input, .save {
+                    display: none;
+                }
+                &.editing {
+                    span, .edit, .delete {
+                        display: none;
+                    }
+                    input, .save {
+                        display: inline;
+                    }
+                }
+                th {
+                    text-align: left;
+                }
+                td, th {
+                    padding: 5px 0;
+                }
+            }
+        }
+    }
+}

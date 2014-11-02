@@ -6,7 +6,7 @@
         <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
         {% assets "css" %}<link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}" />{% endassets %}
     </head>
-    <body>
+    <body class="{{ page | default('') }}">
         <img alt="full screen background image"
              src="{{ url_for('static', filename='images/background.jpg') }}" 
              id="full-screen-background-image" />
@@ -34,6 +34,13 @@
                 </li><li><a {% if request.path == url_for('.gigs') %}class="current"{% endif %} href="{{ url_for('.gigs') }}">GIGS</a></li>
             </ul>
         </nav>
+        <ul id="messages">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+              <li class="wrapper {{ category }}">{{ message }}<a class='close' href='javascript:void(0)'><i class='fa fa-times fa-fw'></i></a></li>
+            {% endfor %}
+        {% endwith %}
+        </ul>
         {% block content %}
         <div class="wrapper">
             {{ lipsum() }}

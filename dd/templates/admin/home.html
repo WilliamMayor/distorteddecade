@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% set title="Admin | Home" %}
+{% set page="admin home" %}
+{% block content %}
+<div class="wrapper users">
+    <h2>Users</h2>
+    <table>
+        <tr><th>Username</th><th>Email</th><th>Password</th><th></th><th></th></tr>
+        {% for u in users | sort(attribute='username') %}
+        <tr data-id="{{ u.id }}">
+            <td class="username">
+                <span>{{ u.username }}</span>
+                {% if u.is_editable() %}<input type="text" value="{{ u.username }}" />{% endif %}
+            </td>
+            <td class="email">
+                <span>{{ u.email }}</span>
+                {% if u.is_editable() %}<input type="email" value="{{ u.email }}" />{% endif %}
+            </td>
+            <td class="password">
+                <span>********</span>
+                {% if u.is_editable() %}<input type="password" value="********" />{% endif %}
+            </td>
+            <td>
+                {% if u.is_editable() %}
+                <a class="edit" href="#edit"><i class="fa fa-pencil fa-fw"></i></a>
+                {% endif %}
+            </td>
+            <td>
+                {% if u.is_deletable() %}
+                <a class="delete" href="#delete"><i class="fa fa-trash-o fa-fw"></i></a>
+                <a class="save" href="#save"><i class="fa fa-save fa-fw"></i></a>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+        <tr class="editing new">
+            <td class="username">
+                <input type="text" placeholder="Add new..." />
+            </td>
+            <td class="email">
+                <input type="email" placeholder="Email" />
+            </td>
+            <td class="password">
+                <input type="password" placeholder="Password" />
+            </td>
+            <td></td>
+            <td>
+                <a class="new" href="#new"><i class="fa fa-plus fa-fw"></i></a>
+            </td>
+        </tr>
+    </table>
+</div>
+{% endblock %}
