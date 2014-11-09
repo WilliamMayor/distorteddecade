@@ -9,5 +9,5 @@ manager.login_view = 'admin.signin'
 
 
 @manager.user_loader
-def load_user(id):
-    return User.query.get(int(id))
+def load_user(uid):
+    return User.query.get(int(uid))

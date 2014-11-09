@@ -8,7 +8,7 @@ bcrypt = Bcrypt()
 
 
 class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    uid = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.Text, unique=True, nullable=False)
     email = db.Column(db.Text, nullable=False)
     password = db.Column(db.Text, nullable=False)
@@ -29,23 +29,10 @@ class User(db.Model):
         return False
 
     def get_id(self):
-        return unicode(self.id)
-
-    def is_editable(self):
-        return self.email != 'mail@williammayor.co.uk'
-
-    def is_deletable(self):
-        return self.is_editable()
+        return unicode(self.uid)
 
     def __repr__(self):
         return '<User %r>' % (self.username)
-
-    def as_json(self):
-        return {
-            'id': self.id,
-            'username': self.username,
-            'email': self.email
-        }
 
 
 class Intro(db.Model):

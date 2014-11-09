@@ -1,12 +1,23 @@
 from flask_wtf import Form
 from wtforms import StringField, PasswordField, TextAreaField, HiddenField
-from wtforms.validators import DataRequired
-from flask_wtf.html5 import URLField
+from wtforms.validators import DataRequired, Optional
+from flask_wtf.html5 import URLField, EmailField
 
 
 class SigninForm(Form):
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
+
+
+class IntroForm(Form):
+    text = TextAreaField('Intro', validators=[DataRequired()])
+
+
+class UserForm(Form):
+    uid = HiddenField(validators=[Optional()])
+    username = StringField('Username', validators=[DataRequired()])
+    email = EmailField('Email', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[Optional()])
 
 
 class BioForm(Form):

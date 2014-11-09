@@ -6,6 +6,9 @@
             text-align: right;
             margin-bottom: 10px;
         }
+        input[type=text] {
+            padding: 5px;
+        }
         .image {
             width: 600px;
         }
@@ -13,6 +16,7 @@
             width: 100%;
             min-height: 200px;
             resize: vertical;
+            padding: 5px;
         }
     }
 }

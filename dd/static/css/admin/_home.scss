@@ -1,29 +1,22 @@
 .admin.home {
     .users {
-        table {
-            width: 100%;
-            tr {
+        .user {
+            margin-bottom: 10px;
+            .username, .email, .password {
+                display: inline-block;
+                width: 200px;
+                input {
+                    padding: 5px;
+                }
+            }
+            &.headings {
                 border-bottom: 1px solid black;
-                &:last-child {
-                    border-bottom: none;
-                }
-                input, .save {
-                    display: none;
-                }
-                &.editing {
-                    span, .edit, .delete {
-                        display: none;
-                    }
-                    input, .save {
-                        display: inline;
-                    }
-                }
-                th {
-                    text-align: left;
-                }
-                td, th {
-                    padding: 5px 0;
-                }
+                padding-bottom: 10px;
+            }
+            &.create {
+                border-top: 1px solid black;
+                padding-top: 10px;
+                margin-bottom: 0;
             }
         }
     }
@@ -32,6 +25,7 @@
             width: 100%;
             min-height: 400px;
             resize: vertical;
+            padding: 5px;
         }
     }
 }

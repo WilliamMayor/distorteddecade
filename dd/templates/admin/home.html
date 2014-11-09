@@ -3,55 +3,55 @@
 {% set page="admin home" %}
 {% block content %}
 <div class="wrapper users">
-    <table>
-        <tr><th>Username</th><th>Email</th><th>Password</th><th></th><th></th></tr>
-        {% for u in users | sort(attribute='username') %}
-        <tr data-id="{{ u.id }}">
-            <td class="username">
-                <span>{{ u.username }}</span>
-                {% if u.is_editable() %}<input type="text" value="{{ u.username }}" />{% endif %}
-            </td>
-            <td class="email">
-                <span>{{ u.email }}</span>
-                {% if u.is_editable() %}<input type="email" value="{{ u.email }}" />{% endif %}
-            </td>
-            <td class="password">
-                <span>********</span>
-                {% if u.is_editable() %}<input type="password" value="********" />{% endif %}
-            </td>
-            <td>
-                {% if u.is_editable() %}
-                <a class="edit" href="#edit"><i class="fa fa-pencil fa-fw"></i></a>
-                {% endif %}
-            </td>
-            <td>
-                {% if u.is_deletable() %}
-                <a class="delete" href="#delete"><i class="fa fa-trash-o fa-fw"></i></a>
-                <a class="save" href="#save"><i class="fa fa-save fa-fw"></i></a>
-                {% endif %}
-            </td>
-        </tr>
-        {% endfor %}
-        <tr class="editing new">
-            <td class="username">
-                <input type="text" placeholder="Add new..." />
-            </td>
-            <td class="email">
-                <input type="email" placeholder="Email" />
-            </td>
-            <td class="password">
-                <input type="password" placeholder="Password" />
-            </td>
-            <td></td>
-            <td>
-                <a class="new" href="#new"><i class="fa fa-plus fa-fw"></i></a>
-            </td>
-        </tr>
-    </table>
+    <div class="user headings">
+        <div class="username">
+            Username
+        </div>
+        <div class="email">
+            Email
+        </div>
+        <div class="password">
+            Password
+        </div>
+    </div>
+    {% for u in users %}
+    <div class="user">
+        <form method="POST" data-delete="{{ url_for('.users_delete', uid=u.uid.data) }}" action="{{ url_for('.users_update', uid=u.uid.data) }}">
+        {{ u.hidden_tag() }}
+        <div class="username">
+            {{ u.username(placeholder=u.username.data) }}
+        </div>
+        <div class="email">
+            {{ u.email(placeholder=u.email.data) }}
+        </div>
+        <div class="password">
+            {{ u.password(placeholder="********") }}
+        </div>
+        <input type="submit" value="Update" />
+        <input class="delete" type="submit" value="Delete" />
+        </form>
+    </div>
+    {% endfor %}
+    <div class="user create">
+        <form method="POST" action="{{ url_for('.users_create') }}">
+        {{ create.hidden_tag() }}
+        <div class="username">
+            {{ create.username(placeholder="New username...") }}
+        </div>
+        <div class="email">
+            {{ create.email(placeholder="New email...") }}
+        </div>
+        <div class="password">
+            {{ create.password(placeholder="New password...") }}
+        </div>
+        <input type="submit" value="Add" />
+        </form>
+    </div>
 </div>
 <div class="wrapper intro">
-    <form method="POST">
-        <textarea name="intro">{{ intro.text }}</textarea>
+    <form method="POST" action="{{ url_for('.home_intro_create') }}">
+        {{ intro.hidden_tag() }}
+        {{ intro.text }}
         <input type="submit" value="Save" />
     </form>
 </div>
