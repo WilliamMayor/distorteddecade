@@ -3,3 +3,4 @@ EMAIL='info@distorteddecade.com'
 FB='https://www.facebook.com/distorted.decade'
 DATABASE_URL=None
 SECRET_KEY=None
+ROLLBAR_ENV='development'
