@@ -11,6 +11,14 @@ h1 {
     font-size: 7em;
     text-align: center;
     margin: 0;
+    font-weight: normal;
+}
+.tagline {
+    font-family: 'impact_labelregular';
+    font-size: 1.5em;
+    text-align: center;
+    margin: 0 0 10px 0;
+    font-weight: normal;
 }
 
 #full-screen-background-image {
@@ -66,6 +74,7 @@ nav.wrapper {
         text-align: center;
         padding: 10px 0;
         font-size: 1.5em;
+        line-height: 1.5em;
         li {
             display: inline-block;
             margin: 0 50px;
