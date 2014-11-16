@@ -7,8 +7,12 @@
     <div class="image"><img src="{{ bio.image }}" alt="Picture of {{ bio.name }}" title="Picture of {{ bio.name }}" /></div>
     <div class="text">
         <p class="name">{{ bio.name }}</p>
-        <p class="role">{{ bio.role }}</p>
-        <p class="bio">{{ bio.text }}</p>
+        {% if bio.role %}<p class="role">{{ bio.role }}</p>{% endif %}
+        <div class="bio">
+            {% for p in bio.split_text() %}
+            <p>{{ p }}</p>
+            {% endfor %}
+        </div>
     </div>
 </div>
 {% endfor %}

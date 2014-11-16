@@ -53,3 +53,7 @@ class Bio(db.Model):
     image = db.Column(db.Text)
     text = db.Column(db.Text)
 
+    def split_text(self):
+        for p in self.text.split('\n'):
+            if p:
+                yield p
