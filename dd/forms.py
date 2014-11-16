@@ -1,7 +1,8 @@
 from flask_wtf import Form
-from wtforms import StringField, PasswordField, TextAreaField, HiddenField
+from wtforms import StringField, PasswordField, TextAreaField, HiddenField, BooleanField
 from wtforms.validators import DataRequired, Optional
 from flask_wtf.html5 import URLField, EmailField
+from wtforms.ext.dateutil.fields import DateTimeField
 
 
 class SigninForm(Form):
@@ -26,3 +27,13 @@ class BioForm(Form):
     role = StringField('Role')
     image = StringField('Image')
     text = TextAreaField('Bio')
+
+
+class GigForm(Form):
+    gid = HiddenField()
+    name = StringField('Name')
+    where = StringField('Where')
+    url = StringField('URL')
+    when = DateTimeField('When')
+    hide = BooleanField('Hidden')
+    private = BooleanField('Private')

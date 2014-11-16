@@ -1,8 +1,8 @@
 from flask import g, Blueprint, current_app, render_template, redirect, request, url_for, jsonify, flash
 from flask.ext.login import current_user, login_required, login_user, logout_user
 
-from forms import SigninForm, IntroForm, UserForm, BioForm
-from models import db, User, Intro, Bio
+from forms import SigninForm, IntroForm, UserForm, BioForm, GigForm
+from models import db, User, Intro, Bio, Gig
 
 
 admin = Blueprint('admin', __name__, template_folder='templates')
@@ -105,7 +105,7 @@ def users_delete(uid):
 def bio():
     return render_template(
         'admin/bio.html', user=current_user,
-        bios=[BioForm(None, obj=b) for b in Bio.query.all()],
+        bios=[BioForm(None, obj=b, prefix=str(b.bid)) for b in Bio.query.all()],
         form=BioForm())
 
 
@@ -126,10 +126,10 @@ def bio_create():
     return redirect(url_for('.bio'))
 
 
-@admin.route('/bio/<int:bid>/update', methods=['POST'])
+@admin.route('/bio/<int:bid>/update/', methods=['POST'])
 @login_required
 def bio_update(bid):
-    form = BioForm()
+    form = BioForm(prefix=str(bid))
     if form.validate_on_submit():
         b = Bio.query.get(bid)
         form.populate_obj(b)
@@ -146,7 +146,7 @@ def bio_update(bid):
 @login_required
 def bio_delete(bid):
     b = Bio.query.get(bid)
-    form = BioForm(obj=b)
+    form = BioForm(obj=b, prefix=str(bid))
     if form.validate_on_submit() and form.name.data == b.name:
         try:
             db.session.delete(b)
@@ -170,7 +170,62 @@ def music():
 @admin.route('/gigs/')
 @login_required
 def gigs():
-    return render_template('base.html', user=current_user)
+    return render_template(
+        'admin/gigs.html', user=current_user,
+        gigs=[GigForm(None, obj=g, prefix=str(g.gid)) for g in Gig.query.all()],
+        form=GigForm())
+
+
+@admin.route('/gigs/create/', methods=['POST'])
+@login_required
+def gigs_create():
+    form = GigForm()
+    if form.validate_on_submit():
+        g = Gig()
+        del form.gid
+        form.populate_obj(g)
+        db.session.add(g)
+        db.session.commit()
+        flash('Gig created!', 'info')
+    else:
+        current_app.logger.error(str(form.errors))
+        flash('There was an error creating the gig, sorry', 'error')
+    return redirect(url_for('.gigs'))
+
+
+@admin.route('/gigs/<int:gid>/update/', methods=['POST'])
+@login_required
+def gigs_update(gid):
+    form = GigForm(prefix=str(gid))
+    if form.validate_on_submit():
+        g = Gig.query.get(gid)
+        form.populate_obj(g)
+        db.session.add(g)
+        db.session.commit()
+        flash('Gig updated!', 'info')
+    else:
+        current_app.logger.error(str(form.errors))
+        flash('There was an error saving the gig, sorry', 'error')
+    return redirect(url_for('.gigs'))
+
+
+@admin.route('/gigs/<int:gid>/delete/', methods=['POST'])
+@login_required
+def gigs_delete(gid):
+    g = Gig.query.get(gid)
+    form = GigForm(obj=g, prefix=str(gid))
+    if form.validate_on_submit() and form.name.data == g.name:
+        try:
+            db.session.delete(g)
+            db.session.commit()
+            flash('Gig deleted!', 'info')
+        except Exception as e:
+            current_app.logger.error(str(e))
+            flash('There was an error deleting the gig, sorry', 'error')
+    else:
+        current_app.logger.error(str(form.errors))
+        flash('There was an error with those gig details, sorry', 'error')
+    return redirect(url_for('.gigs'))
 
 
 @admin.route('/signin/', methods=['GET', 'POST'])

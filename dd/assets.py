@@ -18,6 +18,7 @@ js = Bundle(
         'js/thenet.js',
         'js/admin/home.js',
         'js/admin/bio.js',
+        'js/admin/gigs.js',
         filters='rjsmin'),
     output='main.min.js')
 assets.register('js', js)
