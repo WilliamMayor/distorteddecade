@@ -53,7 +53,26 @@ class Bio(db.Model):
     image = db.Column(db.Text)
     text = db.Column(db.Text)
 
+    @property
     def split_text(self):
         for p in self.text.split('\n'):
             if p:
                 yield p
+
+
+class Gig(db.Model):
+    gid = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.Text, nullable=False)
+    where = db.Column(db.Text, nullable=False)
+    url = db.Column(db.Text)
+    when = db.Column(db.DateTime, nullable=False)
+    hide = db.Column(db.Boolean, default=False)
+    private = db.Column(db.Boolean, default=False)
+
+    @property
+    def date(self):
+        return '%d-%02d-%02d' % (self.when.year, self.when.month, self.when.day)
+
+    @property
+    def time(self):
+        return '%02d:%02d' % (self.when.hour, self.when.minute)

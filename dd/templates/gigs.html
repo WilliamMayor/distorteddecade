@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% set title="Gigs" %}
+{% set page="public gigs" %}
+{% block content %}
+<div class="wrapper upcoming">
+    <h2>Upcoming Gigs</h2>
+{% for gig in upcoming | sort(attribute='when') %}
+    <div class="gig">
+        <div class="when">
+            <div class="date">{{ gig.date }}</div>
+            <div class="time"> @ {{ gig.time }}</div>
+        </div>
+        <div class="namewhere">
+            <div class="name">
+                {% if gig.url %}
+                <a href="{{ gig.url }}">{{ gig.name }}</a>
+                {% else %}
+                {{ gig.name }}
+                {% endif %}
+            </div>
+            <div class="where">{{ gig.where }}</div>
+        </div>
+    </div>
+{% endfor %}
+</div>
+
+<div class="wrapper past">
+    <h2>Past Gigs</h2>
+{% for gig in past | sort(attribute='when', reverse=True) %}
+    <div class="gig">
+        <div class="when">
+            <div class="date">{{ gig.date }}</div>
+            <div class="time"> @ {{ gig.time }}</div>
+        </div>
+        <div class="namewhere">
+            <div class="name">
+                {% if gig.url %}
+                <a href="{{ gig.url }}">{{ gig.name }}</a>
+                {% else %}
+                {{ gig.name }}
+                {% endif %}
+            </div>
+            <div class="where">{{ gig.where }}</div>
+        </div>
+    </div>
+{% endfor %}
+</div>
+{% endblock %}

@@ -126,7 +126,7 @@ def bio_create():
     return redirect(url_for('.bio'))
 
 
-@admin.route('/bio/update/<int:bid>/', methods=['POST'])
+@admin.route('/bio/<int:bid>/update', methods=['POST'])
 @login_required
 def bio_update(bid):
     form = BioForm()
@@ -139,6 +139,25 @@ def bio_update(bid):
     else:
         current_app.logger.error(str(form.errors))
         flash('There was an error saving the bio, sorry', 'error')
+    return redirect(url_for('.bio'))
+
+
+@admin.route('/bio/<int:bid>/delete/', methods=['POST'])
+@login_required
+def bio_delete(bid):
+    b = Bio.query.get(bid)
+    form = BioForm(obj=b)
+    if form.validate_on_submit() and form.name.data == b.name:
+        try:
+            db.session.delete(b)
+            db.session.commit()
+            flash('Bio deleted!', 'info')
+        except Exception as e:
+            current_app.logger.error(str(e))
+            flash('There was an error deleting the bio, sorry', 'error')
+    else:
+        current_app.logger.error(str(form.errors))
+        flash('There was an error with those bio details, sorry', 'error')
     return redirect(url_for('.bio'))
 
 

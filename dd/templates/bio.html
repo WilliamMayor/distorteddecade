@@ -9,7 +9,7 @@
         <p class="name">{{ bio.name }}</p>
         {% if bio.role %}<p class="role">{{ bio.role }}</p>{% endif %}
         <div class="bio">
-            {% for p in bio.split_text() %}
+            {% for p in bio.split_text %}
             <p>{{ p }}</p>
             {% endfor %}
         </div>

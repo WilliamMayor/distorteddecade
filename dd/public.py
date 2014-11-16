@@ -1,6 +1,8 @@
+import datetime
+
 from flask import Blueprint, current_app, render_template
 
-from models import Intro, Bio
+from models import Intro, Bio, Gig
 
 public = Blueprint('public', __name__, template_folder='templates')
 
@@ -23,5 +25,10 @@ def music():
 
 @public.route('/gigs/')
 def gigs():
-    return render_template('base.html')
+    gigs = Gig.query.all()
+    gigs = filter(lambda g: not g.hide, gigs)
+    today = datetime.datetime.now()
+    past = filter(lambda g: g.when < today, gigs)
+    upcoming = filter(lambda g: g.when >= today, gigs)
+    return render_template('gigs.html', past=past, upcoming=upcoming)
 
