@@ -6,7 +6,6 @@ case "$1" in
         cat "$VG_APP_DIR/.env/production" >> "$VG_ENV_FILE"
         vantage pg dump > /tmp/deploy.dump
         url=$(vantage pg restore /tmp/deploy.dump)
-        echo "$url"
         echo "DATABASE_URL=$url" >> "$VG_ENV_FILE"
         cat "$VG_ENV_FILE"
         vantage alembic apply
