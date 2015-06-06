@@ -6,7 +6,7 @@
 <div class="wrapper embed">
     <form method="POST" data-delete="{{ url_for('.music_delete', eid=embed.eid.data) }}" action="{{ url_for('.music_update', eid=embed.eid.data) }}">
         {{ embed.hidden_tag() }}
-        {{ embed.name.label }}: {{ embed.name() }}<br />
+        {{ embed.name.label }}: {{ embed.name(class='name') }}<br />
         {{ embed.code.label }}: {{ embed.code() }}<br />
         <input type="submit" value="Save" />
         <input class="delete" type="submit" value="Delete" />

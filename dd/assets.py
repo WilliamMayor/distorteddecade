@@ -21,6 +21,7 @@ js = Bundle(
         'js/admin/home.js',
         'js/admin/bio.js',
         'js/admin/gigs.js',
+        'js/admin/music.js',
         filters='rjsmin'),
     output='main.min.js')
 assets.register('js', js)
