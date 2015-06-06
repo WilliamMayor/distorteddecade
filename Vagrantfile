@@ -1,8 +1,12 @@
 $script = <<SCRIPT
     locale-gen en_GB.UTF-8
+    echo <<EOF
+        deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main
+    EOF > /etc/apt/sources.list.d/pgdg.list
+    wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
     apt-get --assume-yes update
     apt-get --assume-yes dist-upgrade
-    apt-get --assume-yes install git
+    apt-get --assume-yes install git postgresql-9.4
     wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
 
     wget -qO- https://get.docker.com/ | sh

@@ -3,19 +3,22 @@ shopt -s nullglob
 
 case "$1" in
     '')
-        vantage --env "$VG_APP_DIR/.env/production" pg dump > "$VG_APP_DIR/dump/deploy.dump"
-        url=$(vantage pg restore "$VG_APP_DIR/dump/deploy.dump")
+        cat "$VG_APP_DIR/.env/production" >> "$VG_ENV_FILE"
+        vantage pg dump > /tmp/deploy.dump
+        url=$(vantage pg restore /tmp/deploy.dump)
+        echo "$url"
         echo "DATABASE_URL=$url" >> "$VG_ENV_FILE"
+        cat "$VG_ENV_FILE"
         vantage alembic apply
         db_upgraded=$?
         if [ "$db_upgraded" -ne 0 ]; then
             echo "Failed to apply alembic migrations to production DB"
             exit 1
         fi
-        rm "$VG_APP_DIR/dump/deploy.dump"
+        rm /tmp/deploy.dump
         heroku pg:reset DATABASE_URL --confirm distorteddecade --app distorteddecade
         heroku pg:push "$url" DATABASE_URL --app distorteddecade
-        heroku push heroku master
+        git push heroku master
         code_pushed=$?
         if [ "$code_pushed" -ne 0 ]; then
             echo "Failed to push code, restoring..."

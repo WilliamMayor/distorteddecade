@@ -20,7 +20,6 @@ python-dateutil==2.4.2
 rjsmin==1.0.10
 six==1.9.0
 SQLAlchemy==1.0.4
-virtualenv==13.0.3
 webassets==0.10.1
 webassets-libsass==0.1
 Werkzeug==0.10.4
