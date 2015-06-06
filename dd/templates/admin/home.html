@@ -7,9 +7,6 @@
         <div class="username">
             Username
         </div>
-        <div class="email">
-            Email
-        </div>
         <div class="password">
             Password
         </div>
@@ -20,9 +17,6 @@
         {{ u.hidden_tag() }}
         <div class="username">
             {{ u.username(placeholder=u.username.data) }}
-        </div>
-        <div class="email">
-            {{ u.email(placeholder=u.email.data) }}
         </div>
         <div class="password">
             {{ u.password(placeholder="********") }}
@@ -37,9 +31,6 @@
         {{ create.hidden_tag() }}
         <div class="username">
             {{ create.username(placeholder="New username...") }}
-        </div>
-        <div class="email">
-            {{ create.email(placeholder="New email...") }}
         </div>
         <div class="password">
             {{ create.password(placeholder="New password...") }}

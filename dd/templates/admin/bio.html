@@ -7,7 +7,7 @@
     <form method="POST" data-delete="{{ url_for('.bio_delete', bid=bio.bid.data) }}" action="{{ url_for('.bio_update', bid=bio.bid.data) }}">
         {{ bio.hidden_tag() }}
         {{ bio.name.label }}: {{ bio.name(class='name') }}<br />
-        {{ bio.role.label }}: {{ bio.role() }}<br />
+        {{ bio.role.label }}: {{ bio.role(class='role') }}<br />
         {{ bio.image.label }}: {{ bio.image(class='image') }}<br />
         {{ bio.text.label }}: {{ bio.text() }}
         <input type="submit" value="Save" />
@@ -18,8 +18,8 @@
 <div class="wrapper bio">
     <form method="POST" action="{{ url_for('.bio_create') }}">
         {{ form.hidden_tag() }}
-        {{ form.name.label }}: {{ form.name() }}<br />
-        {{ form.role.label }}: {{ form.role() }}<br />
+        {{ form.name.label }}: {{ form.name(class='name') }}<br />
+        {{ form.role.label }}: {{ form.role(class='role') }}<br />
         {{ form.image.label }}: {{ form.image(class='image') }}<br />
         {{ form.text.label }}: {{ form.text() }}
         <input type="submit" value="Add" />

@@ -6,11 +6,14 @@
             text-align: right;
             margin-bottom: 10px;
         }
+        .name, .role {
+            width: 300px;
+        }
         .image {
             width: 600px;
         }
         textarea {
-            width: 100%;
+            width: 770px;
             min-height: 200px;
             resize: vertical;
         }

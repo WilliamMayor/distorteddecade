@@ -2,7 +2,6 @@ from flask_wtf import Form
 from wtforms import (
     StringField, PasswordField, TextAreaField, HiddenField, BooleanField)
 from wtforms.validators import DataRequired, Optional
-from flask_wtf.html5 import EmailField
 from wtforms.ext.dateutil.fields import DateTimeField
 
 
@@ -18,7 +17,6 @@ class IntroForm(Form):
 class UserForm(Form):
     uid = HiddenField(validators=[Optional()])
     username = StringField('Username', validators=[DataRequired()])
-    email = EmailField('Email', validators=[DataRequired()])
     password = PasswordField('Password', validators=[Optional()])
 
 

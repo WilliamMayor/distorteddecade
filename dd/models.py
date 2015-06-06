@@ -10,7 +10,6 @@ bcrypt = Bcrypt()
 class User(db.Model):
     uid = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.Text, unique=True, nullable=False)
-    email = db.Column(db.Text, nullable=False)
     password = db.Column(db.Text, nullable=False)
 
     def check_password(self, candidate):

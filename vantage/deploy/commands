@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+shopt -s nullglob
+
+case "$1" in
+    '')
+        vantage --env "$VG_APP_DIR/.env/production" pg dump > "$VG_APP_DIR/dump/deploy.dump"
+        url=$(vantage pg restore "$VG_APP_DIR/dump/deploy.dump")
+        echo "DATABASE_URL=$url" >> "$VG_ENV_FILE"
+        vantage alembic apply
+        db_upgraded=$?
+        if [ "$db_upgraded" -ne 0 ]; then
+            echo "Failed to apply alembic migrations to production DB"
+            exit 1
+        fi
+        rm "$VG_APP_DIR/dump/deploy.dump"
+        heroku pg:reset DATABASE_URL --confirm distorteddecade --app distorteddecade
+        heroku pg:push "$url" DATABASE_URL --app distorteddecade
+        heroku push heroku master
+        code_pushed=$?
+        if [ "$code_pushed" -ne 0 ]; then
+            echo "Failed to push code, restoring..."
+            heroku pg:backups restore --confirm distorteddecade --app distorteddecade
+            heroku rollback --app distorteddecade
+            exit 1
+        fi
+        exit $VG_VALID_EXIT
+        ;;
+    help)
+        echo "    deploy - Deploy app"
+        ;;
+    *)
+        exit $VG_NOT_IMPLEMENTED_EXIT
+        ;;
+esac
