@@ -2,7 +2,7 @@ import datetime
 
 from flask import Blueprint, render_template
 
-from dd.models import Intro, Bio, Gig
+from dd.models import Intro, Bio, Gig, Embed
 
 public = Blueprint('public', __name__, template_folder='templates')
 
@@ -20,7 +20,7 @@ def bio():
 
 @public.route('/music/')
 def music():
-    return render_template('base.html')
+    return render_template('music.html', embeds=Embed.query.all())
 
 
 @public.route('/gigs/')

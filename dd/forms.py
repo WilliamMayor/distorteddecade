@@ -36,3 +36,9 @@ class GigForm(Form):
     when = DateTimeField('When')
     hide = BooleanField('Hidden')
     private = BooleanField('Private')
+
+
+class EmbedForm(Form):
+    eid = HiddenField()
+    name = StringField('Name')
+    code = StringField('Code')

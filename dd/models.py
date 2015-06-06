@@ -77,3 +77,9 @@ class Gig(db.Model):
     @property
     def time(self):
         return '%02d:%02d' % (self.when.hour, self.when.minute)
+
+
+class Embed(db.Model):
+    eid = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.Text, nullable=False)
+    code = db.Column(db.Text, nullable=False)

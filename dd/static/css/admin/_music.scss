@@ -1,0 +1,19 @@
+.admin.music {
+    .embed {
+        label {
+            display: inline-block;
+            width: 100px;
+            text-align: right;
+            margin-bottom: 10px;
+        }
+        input {
+            margin: 5px 0;
+        }
+        input[type=text], input[type=url] {
+            width: 500px;
+        }
+        input[type=submit] {
+            margin-left: 50px;
+        }
+    }
+}

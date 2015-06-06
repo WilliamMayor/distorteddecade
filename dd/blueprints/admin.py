@@ -3,8 +3,9 @@ from flask import (
 from flask.ext.login import (
     current_user, login_required, login_user, logout_user)
 
-from dd.forms import SigninForm, IntroForm, UserForm, BioForm, GigForm
-from dd.models import db, User, Intro, Bio, Gig
+from dd.forms import (
+    SigninForm, IntroForm, UserForm, BioForm, GigForm, EmbedForm)
+from dd.models import db, User, Intro, Bio, Gig, Embed
 
 admin = Blueprint('admin', __name__, template_folder='templates')
 
@@ -172,12 +173,6 @@ def bio_delete(bid):
     return redirect(url_for('.bio'))
 
 
-@admin.route('/music/')
-@login_required
-def music():
-    return render_template('base.html', user=current_user)
-
-
 @admin.route('/gigs/')
 @login_required
 def gigs():
@@ -239,6 +234,69 @@ def gigs_delete(gid):
         current_app.logger.error(str(form.errors))
         flash('There was an error with those gig details, sorry', 'error')
     return redirect(url_for('.gigs'))
+
+
+@admin.route('/music/')
+@login_required
+def music():
+    return render_template(
+        'admin/music.html', user=current_user,
+        embeds=[
+            EmbedForm(None, obj=e, prefix=str(e.eid))
+            for e in Embed.query.all()],
+        form=EmbedForm())
+
+
+@admin.route('/music/create/', methods=['POST'])
+@login_required
+def music_create():
+    form = EmbedForm()
+    if form.validate_on_submit():
+        e = Embed()
+        del form.eid
+        form.populate_obj(e)
+        db.session.add(e)
+        db.session.commit()
+        flash('Embed added!', 'info')
+    else:
+        current_app.logger.error(str(form.errors))
+        flash('There was an error adding the embed, sorry', 'error')
+    return redirect(url_for('.music'))
+
+
+@admin.route('/music/<int:eid>/update/', methods=['POST'])
+@login_required
+def music_update(eid):
+    form = EmbedForm(prefix=str(eid))
+    if form.validate_on_submit():
+        e = Embed.query.get(eid)
+        form.populate_obj(e)
+        db.session.add(e)
+        db.session.commit()
+        flash('Embed updated!', 'info')
+    else:
+        current_app.logger.error(str(form.errors))
+        flash('There was an error saving the embed, sorry', 'error')
+    return redirect(url_for('.music'))
+
+
+@admin.route('/music/<int:eid>/delete/', methods=['POST'])
+@login_required
+def music_delete(eid):
+    e = Embed.query.get(eid)
+    form = EmbedForm(obj=e, prefix=str(eid))
+    if form.validate_on_submit() and form.name.data == e.name:
+        try:
+            db.session.delete(e)
+            db.session.commit()
+            flash('Embed deleted!', 'info')
+        except Exception as e:
+            current_app.logger.error(str(e))
+            flash('There was an error deleting the embed, sorry', 'error')
+    else:
+        current_app.logger.error(str(form.errors))
+        flash('There was an error with those embed details, sorry', 'error')
+    return redirect(url_for('.music'))
 
 
 @admin.route('/signin/', methods=['GET', 'POST'])
