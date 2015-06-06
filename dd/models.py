@@ -12,7 +12,7 @@ class User(db.Model):
     username = db.Column(db.Text, unique=True, nullable=False)
     email = db.Column(db.Text, nullable=False)
     password = db.Column(db.Text, nullable=False)
-    
+
     def check_password(self, candidate):
         return bcrypt.check_password_hash(self.password, candidate)
 
@@ -38,7 +38,8 @@ class User(db.Model):
 class Intro(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.Text, nullable=False)
-    date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.now)
+    date = db.Column(
+        db.DateTime, nullable=False, default=datetime.datetime.now)
 
     def __iter__(self):
         for p in self.text.split('\n'):
@@ -71,7 +72,8 @@ class Gig(db.Model):
 
     @property
     def date(self):
-        return '%d-%02d-%02d' % (self.when.year, self.when.month, self.when.day)
+        return '%d-%02d-%02d' % (
+            self.when.year, self.when.month, self.when.day)
 
     @property
     def time(self):

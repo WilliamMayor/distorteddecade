@@ -1,9 +1,10 @@
-from flask import g, Blueprint, current_app, render_template, redirect, request, url_for, jsonify, flash
-from flask.ext.login import current_user, login_required, login_user, logout_user
+from flask import (
+    Blueprint, current_app, render_template, redirect, request, url_for, flash)
+from flask.ext.login import (
+    current_user, login_required, login_user, logout_user)
 
-from forms import SigninForm, IntroForm, UserForm, BioForm, GigForm
-from models import db, User, Intro, Bio, Gig
-
+from dd.forms import SigninForm, IntroForm, UserForm, BioForm, GigForm
+from dd.models import db, User, Intro, Bio, Gig
 
 admin = Blueprint('admin', __name__, template_folder='templates')
 
@@ -13,9 +14,12 @@ admin = Blueprint('admin', __name__, template_folder='templates')
 def home():
     return render_template(
         'admin/home.html', user=current_user,
-        users=[UserForm(None, obj=u) for u in User.query.filter(User.username != 'Admin').all()],
+        users=[
+            UserForm(None, obj=u)
+            for u in User.query.filter(User.username != 'Admin').all()],
         intro=IntroForm(obj=Intro.query.order_by(Intro.date.desc()).first()),
         create=UserForm(None))
+
 
 @admin.route('/home/intro/', methods=['POST'])
 @login_required
@@ -46,6 +50,7 @@ def users_create():
             u = User()
             del form.uid
             form.populate_obj(u)
+            u.set_password(form.password.data)
             db.session.add(u)
             db.session.commit()
             flash('User created!', 'info')
@@ -86,7 +91,11 @@ def users_update(uid):
 def users_delete(uid):
     u = User.query.get(uid)
     form = UserForm(obj=u)
-    if form.validate_on_submit() and form.username.data == u.username and u.username != 'Admin':
+    can_delete = all([
+        form.validate_on_submit(),
+        form.username.data == u.username,
+        u.username != 'Admin'])
+    if can_delete:
         try:
             db.session.delete(u)
             db.session.commit()
@@ -105,7 +114,9 @@ def users_delete(uid):
 def bio():
     return render_template(
         'admin/bio.html', user=current_user,
-        bios=[BioForm(None, obj=b, prefix=str(b.bid)) for b in Bio.query.all()],
+        bios=[
+            BioForm(None, obj=b, prefix=str(b.bid))
+            for b in Bio.query.all()],
         form=BioForm())
 
 
@@ -172,7 +183,9 @@ def music():
 def gigs():
     return render_template(
         'admin/gigs.html', user=current_user,
-        gigs=[GigForm(None, obj=g, prefix=str(g.gid)) for g in Gig.query.all()],
+        gigs=[
+            GigForm(None, obj=g, prefix=str(g.gid))
+            for g in Gig.query.all()],
         form=GigForm())
 
 

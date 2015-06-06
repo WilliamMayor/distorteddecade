@@ -5,11 +5,13 @@
 @import "messages";
 @import "base";
 @import "thenet";
-@import "signin";
 
-@import "home";
-@import "bio";
-@import "gigs";
+@import "public/signin";
+@import "public/home";
+@import "public/bio";
+@import "public/gigs";
+
+@import "admin/base";
 @import "admin/home";
 @import "admin/bio";
 @import "admin/gigs";

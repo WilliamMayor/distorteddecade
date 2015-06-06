@@ -1,21 +1,23 @@
 from flask.ext.assets import Environment, Bundle
+from webassets.filter import register_filter
+from webassets_libsass import LibSass
+
+register_filter(LibSass)
 
 assets = Environment()
 
 css = Bundle(
     'css/main.scss',
-    filters='scss,cssmin',
+    filters='libsass,cssmin',
     output='main.min.css',
     depends=['css/*.scss', 'css/*/*.scss'])
 assets.register('css', css)
 
 js = Bundle(
+    'js/vendor/jquery-1.11.3.min.js',
     'js/vendor/underscore-min.js',
-    'js/vendor/jquery-2.1.1.min.js',
     Bundle(
         'js/dd.js',
-        'js/rollbar.js',
-        'js/thenet.js',
         'js/admin/home.js',
         'js/admin/bio.js',
         'js/admin/gigs.js',

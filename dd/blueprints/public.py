@@ -1,8 +1,8 @@
 import datetime
 
-from flask import Blueprint, current_app, render_template
+from flask import Blueprint, render_template
 
-from models import Intro, Bio, Gig
+from dd.models import Intro, Bio, Gig
 
 public = Blueprint('public', __name__, template_folder='templates')
 
@@ -31,4 +31,3 @@ def gigs():
     past = filter(lambda g: g.when < today, gigs)
     upcoming = filter(lambda g: g.when >= today, gigs)
     return render_template('gigs.html', past=past, upcoming=upcoming)
-

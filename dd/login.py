@@ -1,5 +1,4 @@
-from flask import g
-from flask.ext.login import LoginManager, current_user
+from flask.ext.login import LoginManager
 
 from models import User
 

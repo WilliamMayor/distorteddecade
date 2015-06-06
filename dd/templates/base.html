@@ -61,7 +61,7 @@
             {% if user is defined and user.is_authenticated() %}
             <a href="{{ url_for('.signout') }}">sign out</a>
             {% else %}
-            <span>&#960;</span>
+            <a href="{{ url_for('admin.home') }}">&#960;</a>
             {% endif %}
         </p>
         {% assets "js" %}<script type="text/javascript" src="{{ ASSET_URL }}"></script>{% endassets %}
