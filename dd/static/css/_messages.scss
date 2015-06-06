@@ -5,12 +5,15 @@
 
     .wrapper {
         padding: 10px 20px;
-        border: 1px solid black;
+        border: 1px solid $border-color;
         margin: 5px auto;
 
         .close {
             float: right;
-            color: #fff;
+            color: $font-color;
+            &:hover {
+                color: $action-color;
+            }
         }
 
         &.error {

@@ -1,15 +1,9 @@
-.signin {
+.admin.signin {
     text-align: center;
 
     label {
         width: 200px;
         text-align: right;
-    }
-    input[type=text], input[type=password] {
-        margin: 10px 5px;
-        padding: 5px;
-        outline: none;
-        border: 1px solid black;
     }
     input[type=submit] {
         margin-top: 10px;
