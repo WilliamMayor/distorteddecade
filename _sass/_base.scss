@@ -1,0 +1,83 @@
+html, body {
+    //min-height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+    font-weight: 300;
+}
+h1 {
+    font-family: 'cf_punkrockshowregular';
+    font-size: 7em;
+    text-align: center;
+    margin: 0;
+    font-weight: normal;
+}
+.tagline {
+    font-family: 'impact_labelregular';
+    font-size: 1.5em;
+    text-align: center;
+    margin: 0 0 10px 0;
+    font-weight: normal;
+}
+
+#full-screen-background-image {
+    z-index: -999;
+    min-height: 100%;
+    min-width: 1024px;
+    width: 100%;
+    height: auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+#contact-details {
+    .books {
+        text-align: center;
+        li {
+            margin: 3px 0 0 0;
+            &.tel, &.email {
+                font-size: 1.3em;
+                a {
+                    text-decoration: none;
+                    color: white;
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+            &.tel {
+                text-align: right;
+            }
+            &.email {
+                text-align: left;
+                margin: 3px 40px 0 40px;
+            }
+            &.fb {
+                margin-top: 5px;
+            }
+        }
+    }
+}
+
+nav.wrapper {
+    padding: 0 20px;
+    ul {
+        list-style-type: none;
+        text-align: center;
+        padding: 10px 0;
+        font-size: 1.5em;
+        li {
+            display: inline-block;
+            margin: 0 50px;
+            a {
+                color: white;
+                text-decoration: none;
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+}

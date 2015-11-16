@@ -1,0 +1,26 @@
+body.gigs {
+    .gig {
+        border-bottom: 1px solid white;
+        padding: 10px 0;
+        .when {
+            display: inline-block;
+            vertical-align: top;
+        }
+        .namewhere {
+            display: inline-block;
+            margin-left: 20px;
+
+            .name {
+                font-size: 1.2em;
+                a {
+                    color: white;
+                }
+            }
+            .where {
+                font-style: italic;
+                font-size: 0.9em;
+                color: rgba(255, 255, 255, 0.8)
+            }
+        }
+    }
+}

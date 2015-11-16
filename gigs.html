@@ -1,0 +1,28 @@
+---
+layout: default
+title: Gigs
+permalink: /gigs/
+class_body: gigs
+---
+<div class="wrapper">
+    <h2>Gigs</h2>
+    {% for gig in site.data.gigs %}
+        <div class="gig">
+            <div class="when">
+                <div class="date">{{ gig.date }}</div>
+                <div class="time"> @ {{ gig.time }}</div>
+            </div>
+            <div class="namewhere">
+                <div class="name">
+                    {% if gig.website %}
+                        <a href="{{ gig.website }}">{{ gig.name }}</a>
+                    {% else %}
+                        {{ gig.name }}
+                    {% endif %}
+                </div>
+                <div class="where">{{ gig.location }}</div>
+                <div class="blurb">{{ gig.blurb }}</div>
+            </div>
+        </div>
+    {% endfor %}
+</div>

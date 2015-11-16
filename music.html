@@ -1,0 +1,12 @@
+---
+layout: default
+title: Music
+permalink: /music/
+class_body: music
+---
+{% for embed in site.data.music %}
+<div class="wrapper embed">
+    <h2>{{ embed.name }}</h2>
+    <div class="code-container">{{ embed.embed }}</div>
+</div>
+{% endfor %}
